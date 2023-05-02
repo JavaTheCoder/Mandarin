@@ -1,0 +1,100 @@
+html {
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Products */
+.flex-parent {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+}
+
+.flex-item {
+    padding: 20px;
+    max-width: 300px;
+    flex: 1 1 300px;
+}
+
+.product-img {
+    padding-bottom: 20px;
+    object-fit: contain;
+    transition: transform .2s;
+    width: 250px;
+    height: 250px;
+}
+
+.product-img:hover {
+    transform: scale(1.1);
+}
+
+.add-to-cart {
+    display: flex;
+    max-width: inherit;
+}
+
+.add-to-cart-item {
+    flex: 1 1 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.add-to-cart-item:first-child {
+    border: none;
+}
+
+.create-btn {
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    margin-top: 20px;
+}
+
+.buttons-class a,
+.buttons-class input {
+    text-decoration: none;
+    border: 1px solid #2f79b5;
+    border-radius: 5px;
+    padding: 3px 10px;
+    color: white;
+    background: #2f79b5;
+}
+
+.buttons-class a:hover,
+.buttons-class input:hover{
+    color: #2f79b5;
+    background: white;
+}
+
+.category-name {
+    font-size: 20px;
+    padding: 5px 20px;
+    border: 1px solid coral;
+    border-radius: 5px;
+    color: white;
+    background: coral;
+}

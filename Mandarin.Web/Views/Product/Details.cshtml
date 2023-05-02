@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@model Mandarin.Web.Models.Product
+@inject UserManager<ApplicationUser> UserManager;
+
+@{
+    var user = UserManager.FindByIdAsync(Model.UserId).Result;
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.Name <span class="category-name">@Model.Category.Name</span></h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Owner
+        </dt>
+        <dd class = "col-sm-10">
+            @user.UserName @(string.IsNullOrEmpty(user.PhoneNumber) ? "" : $"({user.PhoneNumber})")
+        </dd>        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+        </dt>
+        <dd class = "col-sm-10">
+            <img class="product-img" src="@Model.Image">
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @foreach (string d in Model.Description.Split("\n"))
+            {
+                <h6 style="font-weight:normal">@d</h6>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div class="buttons-class">
+    @if (UserManager.GetUserId(User) == Model.UserId)
+    {
+        <a asp-action="Update" asp-route-id="@Model?.Id">Update</a> 
+        <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a> 
+    }
+
+    <a asp-action="Index">Back to List</a>
+</div>
