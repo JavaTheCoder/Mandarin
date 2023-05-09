@@ -1,7 +1,7 @@
-﻿using Mandarin.Web.Models;
+﻿using Mandarin.Data.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Mandarin.Web.ViewModels
+namespace Mandarin.Data.ViewModels
 {
     public class ProductVM
     {

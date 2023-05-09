@@ -1,22 +1,24 @@
-﻿@using Microsoft.AspNetCore.Identity;
+﻿@using Mandarin.Data.Models;
+@using Microsoft.AspNetCore.Identity;
 
-@model Mandarin.Web.Models.Product
+@model Product
 @inject UserManager<ApplicationUser> UserManager;
 
 @{
     var user = UserManager.FindByIdAsync(Model.UserId).Result;
     ViewData["Title"] = "Details";
 }
-
-<h1>@Model.Name <span class="category-name">@Model.Category.Name</span></h1>
-<hr />
+<div class="div-with-cat" style="margin-bottom:30px;">
+    <h1>@Model.Name</h1>
+    <h2 class="category-name">@Model.Category.Name</h2>
+</div>
 <div>
     <dl class="row">
         <dt class = "col-sm-2">
             Owner
         </dt>
         <dd class = "col-sm-10">
-            @user.UserName @(string.IsNullOrEmpty(user.PhoneNumber) ? "" : $"({user.PhoneNumber})")
+            @user?.UserName @(string.IsNullOrEmpty(user?.PhoneNumber) ? "Unknown" : $"({user?.PhoneNumber})")
         </dd>        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -28,7 +30,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            $@Html.DisplayFor(model => model.Price)
         </dd>
         <dt class = "col-sm-2">
         </dt>

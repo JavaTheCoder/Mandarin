@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Mandarin.Web.Models
+namespace Mandarin.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {

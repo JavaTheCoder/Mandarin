@@ -1,0 +1,36 @@
+﻿@using Mandarin.Data.Models;
+@using Mandarin.Data.ViewModels;
+@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Favorites";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* FOR TESTING PURPOSES
+https://i.dell.com/sites/csimages/Product_Imagery/all/fp-aw-laptops-hero-a-1920x1440-v2.png
+https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4OXzi?ver=3a58
+*@
+
+<div class="div-with-cat">
+    <partial name="_SearchView" model="@(new ProductVM())" />
+    <h2 style="margin-bottom:0">Favorite Products</h2>
+</div>
+
+
+<div class="text-center">
+    <div class=flex-parent>
+        @foreach(var product in Model)
+        {
+            <div class="flex-item">
+                <img class="product-img" onclick="imgClick(@product.Id)" src="@product.Image">
+                <h5>@product.Name</h5>
+                <div class="add-to-cart">
+                    <h6 style="margin:0 15px 0 0;">$@product.Price</h6>
+                    @Html.ActionLink("🧡", "AddOrRemoveFavorites", "Product", new { id = product.Id }, new { @class= "add-to-cart-item favorite"} )
+                    @Html.ActionLink("🛒", "AddToCart", "Product", new { id = product.Id }, new { @class= "add-to-cart-item"})
+                </div>
+            </div>
+        }
+    </div>
+</div>

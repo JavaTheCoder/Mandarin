@@ -1,6 +1,7 @@
+using Mandarin.Data.Data;
+using Mandarin.Data.Models;
+using Mandarin.Data.Services;
 using Mandarin.Web;
-using Mandarin.Web.Data;
-using Mandarin.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<FavoriteProductService>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {

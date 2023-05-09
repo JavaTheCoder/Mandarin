@@ -1,4 +1,4 @@
-﻿namespace Mandarin.Web.Models
+﻿namespace Mandarin.Data.Models
 {
     public class Category
     {

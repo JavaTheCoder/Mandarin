@@ -1,13 +1,14 @@
-﻿using Mandarin.Web.Models;
+﻿using Mandarin.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Mandarin.Web.Data
+namespace Mandarin.Data.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<FavoriteProduct> Favorites { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -16,8 +17,6 @@ namespace Mandarin.Web.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
@@ -52,6 +51,8 @@ namespace Mandarin.Web.Data
                         UserId = "9cde0a18-1721-474c-ba84-804e7a88888b"
                     }
                 );
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

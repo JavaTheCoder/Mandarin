@@ -1,4 +1,4 @@
-﻿using Mandarin.Web.Models;
+﻿using Mandarin.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Mandarin.Web

@@ -1,0 +1,16 @@
+﻿@model Mandarin.Data.ViewModels.ProductVM
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div>
+    <form asp-action="SearchByName" id="filter-form">
+        <div class="form-group" id="filterbyname">
+            <input asp-for="Name" class="form-control" placeholder="Search Product" autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="search-btn">🔍</button>
+        </div>
+    </form>
+</div>
+

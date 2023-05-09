@@ -1,67 +1,93 @@
 ﻿using AutoMapper;
-using Elfie.Serialization;
-using Mandarin.Web.Data;
-using Mandarin.Web.Helpers;
-using Mandarin.Web.Models;
-using Mandarin.Web.ViewModels;
+using Mandarin.Data.Helpers;
+using Mandarin.Data.Models;
+using Mandarin.Data.Services;
+using Mandarin.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-// TODO: user should have phone number
-// TODO: add email sender to confirm email when registering
+// TODO: LAST ONE | add email sender to confirm email when registering
 namespace Mandarin.Web.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly ApplicationDbContext _context;
+        private readonly ProductService _productService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly FavoriteProductService _favoritesService;
 
-        public ProductController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ProductController(UserManager<ApplicationUser> userManager,
+            ProductService productService,
+            FavoriteProductService favoritesService)
         {
-            _context = context;
             _userManager = userManager;
+            _productService = productService;
+            _favoritesService = favoritesService;
             _mapper = MapperConfig.GetMapper();
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult<List<Product>>> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            string? username = _userManager.GetUserName(User);
+            var products = await _favoritesService.GetFavoriteProducts(username);
+
+            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
+            ViewBag.CategoriesList = _productService.GetCategoriesList();
+
+            var tuple = (await _productService.GetAllProductsWithCategories(), new ProductVM());
+            return View(tuple);
+        }
+
+        public async Task<ActionResult<List<Product>>> ShowByCategory(int id)
+        {
+            string? username = _userManager.GetUserName(User);
+            var products = await _favoritesService.GetFavoriteProducts(username);
+
+            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
+            ViewBag.CategoriesList = _productService.GetCategoriesList();
+
+            var tuple = (await _productService.GetProductsByCategoryId(id), new ProductVM());
+            return View("Index", tuple);
+        }
+
+        public async Task<IActionResult> SearchByName(ProductVM result)
+        {
+            if (string.IsNullOrEmpty(result.Name))
+            {
+                return RedirectToAction("Index");
+            }
+
+            string? username = _userManager.GetUserName(User);
+            var products = await _favoritesService.GetFavoriteProducts(username);
+
+            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
+            ViewBag.CategoriesList = _productService.GetCategoriesList();
+
+            var tuple = (await _productService.GetFilteredProducts(result.Name), result);
+            return View("Index", tuple);
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult<Product> Create()
+        public ActionResult<ProductVM> Create()
         {
-            var productVM = new ProductVM();
-            productVM.CategoriesList = _context.Categories.Select(c =>
-                new SelectListItem(c.Name, $"{c.Id}"));
-            productVM.UserId = _userManager.GetUserId(User);
+            var productVM = new ProductVM
+            {
+                UserId = _userManager.GetUserId(User),
+                CategoriesList = _productService.GetCategoriesList()
+            };
 
             return View(productVM);
         }
 
-        //var product = new Product
-        //{
-        //    Name = productVM.Name,
-        //    CategoryId = productVM.CategoryId,
-        //    Description = productVM.Description,
-        //    Image = productVM.Image,
-        //    Price = productVM.Price,
-        //    UserId = productVM.UserId
-        //};
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create(ProductVM productVM)
         {
             var product = _mapper.Map<ProductVM, Product>(productVM);
-            _context.Products.Add(product);
-
-            await _context.SaveChangesAsync();
+            await _productService.AddProduct(product);
             return RedirectToAction("Index");
         }
 
@@ -69,8 +95,8 @@ namespace Mandarin.Web.Controllers
         [Authorize]
         public ActionResult<Product> Update(int id)
         {
-            var product = _context.Products.Find(id);
-            if (product.UserId == _userManager.GetUserId(User))
+            var product = _productService.GetProductById(id);
+            if (product?.UserId == _userManager.GetUserId(User))
             {
                 return View(product);
             }
@@ -81,22 +107,14 @@ namespace Mandarin.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Update(Product newProduct, int id)
         {
-            var product = _context.Products.Find(id);
-            product.Name = newProduct.Name;
-            product.Price = newProduct.Price;
-            product.Image = newProduct.Image;
-            product.Category = newProduct.Category;
-            product.Description = newProduct.Description;
-
-            await _context.SaveChangesAsync();
+            await _productService.UpdateProduct(id, newProduct);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public ActionResult<Product> Details(int id)
         {
-            var product = _context.Products.Find(id);
-            product.Category = _context.Categories.Find(product.CategoryId);
+            var product = _productService.GetProductWithCategoryById(id);
             return View(product);
         }
 
@@ -104,11 +122,26 @@ namespace Mandarin.Web.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var product = _context.Products.Find(id);
+            var product = _productService.GetProductById(id);
+            _productService.DeleteProduct(product);
 
-            _context.Products.Remove(product);
-            _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult AddOrRemoveFavorites(int id)
+        {
+            string? username = _userManager.GetUserName(User);
+            _favoritesService.AddOrRemoveFavorites(id, username);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult<List<Product>>> GetFavoriteProducts()
+        {
+            string? username = _userManager.GetUserName(User);
+            var products = await _favoritesService.GetFavoriteProducts(username);
+
+            return View("Favorites", products);
         }
 
         public IActionResult Privacy()
@@ -119,7 +152,11 @@ namespace Mandarin.Web.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id
+                ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

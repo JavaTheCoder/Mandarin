@@ -3,6 +3,64 @@ html {
   box-sizing: border-box;
 }
 
+body, nav {
+    background-color: #222125;
+}
+
+h1, h2, h3, h4, h5, h6,
+label, input, .amogus,
+.col-sm-2, .col-sm-10 {
+    color: white;
+}
+
+#filterbyname {
+    width: 300px;
+}
+
+.search-btn {
+    border: 1px solid #ced4da;
+    background: none;
+    align-content: center;
+    padding: .375rem .75rem;
+    border-radius: 0.25rem;
+}
+
+.form-control,
+.form-control:active,
+.form-control:focus,
+.dropdown-list {
+    background-color: #222125;
+    color: white;
+}
+
+.div-with-cat {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.dropdown-list {
+    border-radius: 5px;
+    padding: 3px;
+}
+
+#filter-form {
+    display: flex;
+}
+
+.search-button {
+    height: 100%;
+}
+
+a {
+    color: coral;
+    text-decoration: none;
+}
+
+a:hover {
+    color: orangered;
+}
+
 *, *:before, *:after {
     box-sizing: inherit;
 }
@@ -13,7 +71,8 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+.form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -53,7 +112,8 @@ body {
 
 .add-to-cart {
     display: flex;
-    max-width: inherit;
+    justify-content: center;
+    align-items: center;
 }
 
 .add-to-cart-item {
@@ -63,30 +123,28 @@ body {
     text-decoration: none;
 }
 
-.add-to-cart-item:first-child {
-    border: none;
+.add-to-cart-item:hover {
+    color: #2f79b5;
+    background: white;
 }
 
-.create-btn {
-    text-decoration: none;
-    font-size: 20px;
-    display: block;
-    margin-top: 20px;
+.add-to-cart-item:first-child {
+    border: none;
 }
 
 .buttons-class a,
 .buttons-class input {
     text-decoration: none;
-    border: 1px solid #2f79b5;
+    border: 1px solid coral;
     border-radius: 5px;
     padding: 3px 10px;
     color: white;
-    background: #2f79b5;
+    background: coral;
 }
 
 .buttons-class a:hover,
-.buttons-class input:hover{
-    color: #2f79b5;
+.buttons-class input:hover {
+    color: coral;
     background: white;
 }
 
@@ -96,5 +154,28 @@ body {
     border: 1px solid coral;
     border-radius: 5px;
     color: white;
-    background: coral;
+    background-color: coral;
 }
+
+.cat-name-small {
+    font-size: 17px;
+    border: 1px solid coral;
+    border-radius: 5px;
+    transition: transform .2s;
+    padding: 5px 0;
+}
+
+.cat-name-small:hover {
+    transform: scale(1.05);
+}
+
+/*
+.create-btn {
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    margin-top: 20px;
+    text-align: left;
+    margin-left: 100px;
+}
+*/

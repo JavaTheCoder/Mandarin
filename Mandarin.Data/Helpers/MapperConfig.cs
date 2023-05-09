@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Mandarin.Web.Models;
-using Mandarin.Web.ViewModels;
+using Mandarin.Data.Models;
+using Mandarin.Data.ViewModels;
 
-namespace Mandarin.Web.Helpers
+namespace Mandarin.Data.Helpers
 {
     public class MapperConfig
     {
-        private static MapperConfiguration config;
+        private static readonly MapperConfiguration config;
 
         static MapperConfig()
         {

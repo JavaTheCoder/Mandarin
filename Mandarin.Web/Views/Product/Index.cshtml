@@ -1,27 +1,45 @@
-﻿@model IEnumerable<Product>
+﻿@using Mandarin.Data.Models;
+@using Mandarin.Data.ViewModels;
+@model (List<Product>, ProductVM)
 
 @{
     ViewData["Title"] = "Home Page";
+    var list = (List<int>?)TempData["FavoriteProductsIds"];
 }
 
+<div class="div-with-cat">
+    <partial name="_SearchView" model="@Model.Item2" />
+    <h2 style="margin-bottom:0">Products</h2>
+</div>
+
 <div class="text-center">
-    <h1 style="text-align: center;">Products @Html.ActionLink("Add", "Create", 
-        "Product", null, new { @class= "create-btn"})</h1>
-    <div class=flex-parent>
-        @foreach(var product in Model)
+    <div class=flex-parent style="margin-bottom:30px">
+        @foreach(var product in Model.Item1)
         {
             <div class="flex-item">
                 <img class="product-img" onclick="imgClick(@product.Id)" src="@product.Image">
                 <h5>@product.Name</h5>
+                <h5 class="cat-name-small">
+                    @Html.ActionLink(@product.Category.Name, "ShowByCategory",
+                        "Product", new { id = product.CategoryId }, new { @style = "color: white" })
+                </h5>
                 <div class="add-to-cart">
-                    <h6 class="add-to-cart-item">$@product.Price</h6>
-                    @*<button class="add-to-cart-item">♡</button>
-                <button class="add-to-cart-item">🛒</button>*@
-                    @Html.ActionLink("♡", "AddToFavorites", "Product", null, new { @class= "add-to-cart-item"} )
-                    @Html.ActionLink("🛒", "AddToCart", "Product", null, new { @class= "add-to-cart-item"})
+                    <h6 style="margin:0 15px 0 0;">$@product.Price</h6>
+                    @Html.ActionLink($"{(list.Contains(product.Id) ? "🧡" : "♡")}", "AddOrRemoveFavorites",
+                        "Product", new { id = product.Id }, 
+                        new { @class= "add-to-cart-item favorite"} )
+                    @Html.ActionLink("🛒", "AddToCart", "Product", new { id = product.Id }, 
+                        new { @class= "add-to-cart-item"})
                 </div>
             </div>
         }
     </div>
+    
 </div>
 
+@*
+@foreach(var cat in ViewBag.CategoriesList)
+{
+        <h1>@cat.Text</h1>
+}
+*@
