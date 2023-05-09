@@ -34,7 +34,8 @@ namespace Mandarin.Data.Services
             if (!string.IsNullOrEmpty(username))
             {
                 var favorite = _context.Favorites
-                    .FirstOrDefault(f => f.Product.Id == product.Id);
+                    .FirstOrDefault(f => f.Product.Id == id
+                    && f.UserName == username);
 
                 if (favorite == null)
                 {

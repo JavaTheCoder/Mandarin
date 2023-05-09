@@ -27,7 +27,7 @@ namespace Mandarin.Data.Services
             _context.SaveChanges();
         }
 
-        public Task<List<Product>> GetAllProductsWithCategories()
+        public Task<List<Product>> GetProductsWithCategories()
         {
             return _context.Products
                 .Include(p => p.Category)
@@ -42,7 +42,7 @@ namespace Mandarin.Data.Services
 
         public async Task<List<Product>> GetFilteredProducts(string name)
         {
-            var productsList = await GetAllProductsWithCategories();
+            var productsList = await GetProductsWithCategories();
             return productsList
                 .Where(p => p.Name.Contains(name,
                     StringComparison.OrdinalIgnoreCase))

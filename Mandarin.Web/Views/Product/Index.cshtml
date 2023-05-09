@@ -20,7 +20,7 @@
                 <img class="product-img" onclick="imgClick(@product.Id)" src="@product.Image">
                 <h5>@product.Name</h5>
                 <h5 class="cat-name-small">
-                    @Html.ActionLink(@product.Category.Name, "ShowByCategory",
+                    @Html.ActionLink(@product.Category.Name, "GetProductsByCategory",
                         "Product", new { id = product.CategoryId }, new { @style = "color: white" })
                 </h5>
                 <div class="add-to-cart">

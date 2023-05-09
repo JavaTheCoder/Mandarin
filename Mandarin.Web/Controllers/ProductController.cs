@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
+// TODO: FIRST ONE | implement chatbox with owner of a product
 // TODO: LAST ONE | add email sender to confirm email when registering
 namespace Mandarin.Web.Controllers
 {
@@ -30,23 +31,15 @@ namespace Mandarin.Web.Controllers
 
         public async Task<ActionResult<List<Product>>> Index()
         {
-            string? username = _userManager.GetUserName(User);
-            var products = await _favoritesService.GetFavoriteProducts(username);
+            await InitializeTempData();
 
-            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
-            ViewBag.CategoriesList = _productService.GetCategoriesList();
-
-            var tuple = (await _productService.GetAllProductsWithCategories(), new ProductVM());
+            var tuple = (await _productService.GetProductsWithCategories(), new ProductVM());
             return View(tuple);
         }
 
-        public async Task<ActionResult<List<Product>>> ShowByCategory(int id)
+        public async Task<ActionResult<List<Product>>> GetProductsByCategory(int id)
         {
-            string? username = _userManager.GetUserName(User);
-            var products = await _favoritesService.GetFavoriteProducts(username);
-
-            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
-            ViewBag.CategoriesList = _productService.GetCategoriesList();
+            await InitializeTempData();
 
             var tuple = (await _productService.GetProductsByCategoryId(id), new ProductVM());
             return View("Index", tuple);
@@ -59,11 +52,7 @@ namespace Mandarin.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            string? username = _userManager.GetUserName(User);
-            var products = await _favoritesService.GetFavoriteProducts(username);
-
-            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
-            ViewBag.CategoriesList = _productService.GetCategoriesList();
+            await InitializeTempData();
 
             var tuple = (await _productService.GetFilteredProducts(result.Name), result);
             return View("Index", tuple);
@@ -157,6 +146,15 @@ namespace Mandarin.Web.Controllers
                 RequestId = Activity.Current?.Id
                 ?? HttpContext.TraceIdentifier
             });
+        }
+
+        private async Task InitializeTempData()
+        {
+            string? username = _userManager.GetUserName(User);
+            var products = await _favoritesService.GetFavoriteProducts(username);
+
+            TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
+            ViewBag.CategoriesList = _productService.GetCategoriesList();
         }
     }
 }
