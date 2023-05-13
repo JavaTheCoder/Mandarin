@@ -9,6 +9,8 @@ namespace Mandarin.Data.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<FavoriteProduct> Favorites { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -21,6 +23,39 @@ namespace Mandarin.Data.Data
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
+
+            modelBuilder.Entity<Chat>()
+                .HasData(
+                    new Chat
+                    {
+                        Id = 1,
+                        OwnerName = "Barry",
+                        CustomerName = "JV",
+                        ProductId = 2
+                    }
+                );
+
+            modelBuilder.Entity<Message>()
+                .HasData(
+                    new Message
+                    {
+                        Id = 1,
+                        Text = "hi Barry. I wanna buy this laptop",
+                        From = "JV",
+                        To = "Barry",
+                        ChatId = 1,
+                        Date = DateTime.Now.AddMinutes(-30)
+                    },
+                    new Message
+                    {
+                        Id = 2,
+                        Text = "hi JV, you sure you can afford it?",
+                        From = "Barry",
+                        To = "JV",
+                        ChatId = 1,
+                        Date = DateTime.Now
+                    }
+                );
 
             modelBuilder.Entity<Category>()
                 .HasData(
