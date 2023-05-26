@@ -55,6 +55,9 @@
         <a asp-action="Update" asp-route-id="@Model?.Id">Update</a> 
         <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a> 
     }
-
+    @if (UserManager.GetUserId(User) != Model.UserId)
+    {
+        <a asp-controller="Chat" asp-action="OpenOrCreateChat" asp-route-id="@Model.Id">Send a message</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>

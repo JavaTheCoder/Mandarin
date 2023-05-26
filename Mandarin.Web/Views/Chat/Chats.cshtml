@@ -1,0 +1,28 @@
+﻿@using Mandarin.Data.Models;
+@using Mandarin.Data.ViewModels;
+@model List<Chat>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h2 class="chat-label">Chats</h2>
+</div>
+
+<div class="text-center">
+    <div style="margin-bottom:30px">
+        @foreach (var chat in Model)
+        {
+            <div class="flex-parent">
+                <img class="chat-img" src="https://res.cloudinary.com/df92myoum/image/upload/v1685070908/mandarin/jvlogo_ejd9d4.jpg">
+
+                <div style="text-align:left">
+                    @Html.ActionLink(@chat.Product.Name, "OpenChat", new { id = @chat.Id },
+                        new { @style = "font-size: 17px; font-weight:400" })
+                    <h5 style="margin-top:5px;">@chat.Messages.Last().Text</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>

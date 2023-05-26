@@ -1,4 +1,6 @@
-﻿namespace Mandarin.Data.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Mandarin.Data.Models
 {
     public class Chat
     {
@@ -9,6 +11,9 @@
         public string CustomerName { get; set; }
 
         public int ProductId { get; set; }
+
+        [NotMapped]
+        public Product Product { get; set; }
 
         public List<Message> Messages = new List<Message>();
     }

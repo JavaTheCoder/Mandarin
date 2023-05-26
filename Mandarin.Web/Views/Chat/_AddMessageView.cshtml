@@ -1,0 +1,19 @@
+﻿@using Mandarin.Data.Models
+@model Message
+
+<div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div style="display:flex;justify-content:center;margin-bottom:35px">
+        <div class="form-group">
+            <textarea asp-for="Text" rows="1" cols="45" class="form-control"
+                      placeholder="Write your message here."
+                      id="myTextarea"></textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+
+        <button class="btn-class" style="margin-left:10px;"
+                onclick="sendAjaxRequest(document.getElementById('myTextarea').value)">
+            Send</button>
+    </div>
+    <input type="hidden" asp-for="@Model.ChatId" />
+</div>

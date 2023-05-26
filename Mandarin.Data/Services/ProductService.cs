@@ -54,6 +54,13 @@ namespace Mandarin.Data.Services
             return _context.Products.Find(id);
         }
 
+        public Product GetProductWithCategory(int id)
+        {
+            return _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefault(p => p.Id == id);
+        }
+
         public async Task<List<Product>> GetProductsByCategoryId(int id)
         {
             return await _context.Products

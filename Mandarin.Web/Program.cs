@@ -14,6 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddTransient<ChatService>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<FavoriteProductService>();
 

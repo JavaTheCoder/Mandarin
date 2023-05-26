@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-// TODO: FIRST ONE | implement chatbox with owner of a product
 // TODO: LAST ONE | add email sender to confirm email when registering
 namespace Mandarin.Web.Controllers
 {
@@ -76,6 +75,8 @@ namespace Mandarin.Web.Controllers
         public async Task<IActionResult> Create(ProductVM productVM)
         {
             var product = _mapper.Map<ProductVM, Product>(productVM);
+            TempData.TryGetValue("ImageUrl", out var img);
+            product.Image = img.ToString();
             await _productService.AddProduct(product);
             return RedirectToAction("Index");
         }
@@ -96,6 +97,9 @@ namespace Mandarin.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Update(Product newProduct, int id)
         {
+            TempData.TryGetValue("ImageUrl", out var img);
+            newProduct.Image = img.ToString();
+
             await _productService.UpdateProduct(id, newProduct);
             return RedirectToAction("Index");
         }
@@ -156,5 +160,9 @@ namespace Mandarin.Web.Controllers
             TempData["FavoriteProductsIds"] = products.Select(p => p.Id).ToList();
             ViewBag.CategoriesList = _productService.GetCategoriesList();
         }
+
+
+        public void SaveUploadedImage(string img) =>
+            TempData["ImageUrl"] = img;
     }
 }

@@ -7,6 +7,53 @@ body, nav {
     background-color: #222125;
 }
 
+.chat-label {
+    margin-bottom: 0;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.chat-img {
+    height: 75px;
+    width: 75px;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+.msg-right {
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.msg-left {
+    justify-content: flex-start;
+    margin-left: 20px;
+}
+
+.message p {
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.message {
+    border: 1px solid coral;
+    width: inherit;
+    border-radius: 15px;
+    margin: 20px 0;
+    padding: 10px 20px;
+}
+
+#textarea {
+    overflow: hidden;
+    padding: 10px;
+    font-size: 14px;
+    margin: 50px auto;
+    display: block;
+    border-radius: 10px;
+    border: 6px solid #556677;
+}
+
 h1, h2, h3, h4, h5, h6,
 label, input, .amogus,
 .col-sm-2, .col-sm-10 {
@@ -48,9 +95,9 @@ label, input, .amogus,
     display: flex;
 }
 
-.search-button {
+/*.search-button {
     height: 100%;
-}
+}*/
 
 a {
     color: coral;
@@ -89,7 +136,11 @@ body {
 .flex-parent {
     display: flex;
     flex-wrap: wrap;
-    width: 1200px;
+    gap: 30px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .flex-item {
@@ -132,8 +183,13 @@ body {
     border: none;
 }
 
+.btn-class {
+
+}
+
 .buttons-class a,
-.buttons-class input {
+.buttons-class input,
+.btn-class {
     text-decoration: none;
     border: 1px solid coral;
     border-radius: 5px;
@@ -143,7 +199,8 @@ body {
 }
 
 .buttons-class a:hover,
-.buttons-class input:hover {
+.buttons-class input:hover,
+.btn-class:hover {
     color: coral;
     background: white;
 }
@@ -165,17 +222,10 @@ body {
     padding: 5px 0;
 }
 
+.cat-name-small a {
+    display: block;
+}
+
 .cat-name-small:hover {
     transform: scale(1.05);
 }
-
-/*
-.create-btn {
-    text-decoration: none;
-    font-size: 20px;
-    display: block;
-    margin-top: 20px;
-    text-align: left;
-    margin-left: 100px;
-}
-*/
