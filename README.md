@@ -11,10 +11,13 @@
 ***
 ## ✅Main Features:
 * ### ✔️Authentication/Authorization on the Portal
-* ### ✔️Creating products
-* ### ✔️Marking products as favoruite
-* ### ✔️Adding products to a cart
-* ### ✔️Chatting with sellers
+* ### ✔️Creating Products
+* ### ✔️Categorizing Products
+* ### ✔️Searching for Products
+* ### ✔️Filtering products by Category 
+* ### ✔️Marking products as Favourite
+* ### ✔️Adding products to a Cart
+* ### ✔️Chatting with Sellers
 
 ***
 ## How to Run?🤔
