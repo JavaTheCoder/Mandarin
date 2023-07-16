@@ -29,11 +29,11 @@
 
 ***
 ## 📸ScreenShots:
-![Screenshot (153)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/3898035e-c6cf-491d-94b2-e47467ec3b64)
-![Screenshot (154)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/c36401cf-954c-4348-89ea-125fa1949f88)
-![Screenshot (155)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/702065c0-04fb-4d82-a99e-1cb40da0538d)
-![Screenshot (156)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/3ce238f7-f22b-4b50-8451-bb53c16668e1)
-![Screenshot (157)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/6cca37b4-d30a-4c75-991c-da88fda695d5)
+![Screenshot (153)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/4d889348-05e2-49c3-a6a3-f33802e9de2d)
+![Screenshot (154)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/349e1015-033a-4f4e-ab45-908095611b7c)
+![Screenshot (155)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/19bc75d0-635a-4b2d-906c-1fd4b2845365)
+![Screenshot (156)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/bbf91146-7beb-43ae-b0cb-04b15c762e22)
+![Screenshot (157)](https://github.com/JavaTheCoder/Mandarin/assets/91730067/603126e2-c1d5-43aa-9006-7ba2e2d543b2)
 
 ***
 ## 🧑‍💻Status:
